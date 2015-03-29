@@ -27,20 +27,26 @@ HEXDATE=$(python2 -c "print '%x' % $(date +%s)")
 cd ${GOPATH}
 mkdir -p instroot/var/lib/hockeypuck
 cd instroot/var/lib/hockeypuck
-git clone https://github.com/hockeypuck/webroot.git www
+if [ ! -d www ]; then
+	git clone https://github.com/hockeypuck/webroot.git www
+fi
 # TODO: set webroot revision?
 
+### Build source package for each supported series.
+
+cd ${GOPATH}
+
 # Get our current and last built revision
-DISTS="precise trusty"
+LTS_SERIES="precise trusty"
 PACKAGE_VERSION="${RELEASE_VERSION}+${HEXDATE}+${SHORTHASH}"
 
 echo "$LONGHASH" > version-git-commit
 echo "$PACKAGE_VERSION" > version-release
 
 # Build for each supported Ubuntu version
-for DIST in $DISTS; do
+for SERIES in $LTS_SERIES; do
 	cat >debian/changelog <<EOF
-hockeypuck (${PACKAGE_VERSION}~${DIST}) ${DIST}; urgency=medium
+hockeypuck (${PACKAGE_VERSION}~${SERIES}) ${SERIES}; urgency=medium
 
   * Release ${RELEASE_VERSION}.
 
