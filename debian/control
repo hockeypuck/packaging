@@ -1,0 +1,18 @@
+Source: hockeypuck
+Section: net
+Priority: optional
+Maintainer: Casey Marshall <cmars@cmarstech.com>
+Build-Depends: debhelper (>= 8.0.0), golang-go (>= 2:1.2)
+Standards-Version: 3.9.5
+Homepage: https://hockeypuck.github.io/
+
+Package: hockeypuck
+Architecture: i386 amd64 armhf
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
+Conflicts: hockeypuck (< 2)
+Recommends:
+ logrotate, upstart
+Suggests:
+ mongodb-server
+Description: OpenPGP Key Server
+ Hockeypuck is an OpenPGP Key Server implementing the HTTP Keyserver Protocol.

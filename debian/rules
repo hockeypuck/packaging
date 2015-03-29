@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export GOPATH:=$(CURDIR)
+export PATH:=$(GOPATH)/bin:$(PATH)
+
+VERSION_RELEASE=$(shell cat $(CURDIR)/version-release)
+VERSION_GIT_COMMIT=$(shell cat $(CURDIR)/version-git-commit)
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	cp -r $(CURDIR)/instroot/* $(CURDIR)/debian/hockeypuck
+	mkdir -p $(CURDIR)/debian/hockeypuck/usr/bin
+	mkdir -p $(CURDIR)/debian/hockeypuck/etc/hockeypuck
+	mkdir -p $(CURDIR)/debian/hockeypuck/var/lib/hockeypuck/templates
+
+	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck \
+		github.com/hockeypuck/server/cmd/hockeypuck
+	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-load \
+		github.com/hockeypuck/server/cmd/hockeypuck
+	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-pbuild \
+		github.com/hockeypuck/server/cmd/hockeypuck
+
+	dh_auto_install
+
+override_dh_auto_clean:
+	rm -rf pkg bin /tmp/go-build*
+	dh_auto_clean
+
+override_dh_strip:
+	:
+
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
+
+override_dh_gencontrol:
+	dh_gencontrol -- $(DB_DEP)
+

@@ -1,0 +1,20 @@
+# vim: set ft=upstart ts=4 et:
+description "Hockeypuck"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+limit nofile 64000 64000
+
+kill timeout 300 # wait 300s between SIGTERM and SIGKILL.
+
+script
+    initstart="yes"
+    if [ -f /etc/default/hockeypuck ]; then
+        . /etc/default/hockeypuck
+    fi
+    if [ "x$initstart" = "xyes" ]; then
+        exec start-stop-daemon --start --quiet --chuid hockeypuck \
+            --exec /usr/bin/hockeypuck -config /etc/hockeypuck/hockeypuck.conf
+    fi
+end script
