@@ -1,0 +1,5 @@
+debian/changelog
+instroot/var/lib/hockeypuck/www
+src
+version-git-commit
+version-release
