@@ -3,7 +3,7 @@
 export DEBEMAIL="cmars@cmarstech.com"
 export DEBFULLNAME="Casey Marshall"
 
-RELEASE_VERSION=2.0~a1
+RELEASE_VERSION=2.0~a2
 
 BUILD_PACKAGE=github.com/hockeypuck/server
 
@@ -20,7 +20,7 @@ ${GOPATH}/bin/godeps -u dependencies.tsv
 
 SHORTHASH=$(git log -1 --pretty=format:%h)
 LONGHASH=$(git log -1 --pretty=format:%H)
-HEXDATE=$(python2 -c "print '%x' % $(date +%s)")
+HEXDATE=$(date +%s)
 
 ### Set up webroot
 
@@ -38,7 +38,7 @@ cd ${GOPATH}
 
 # Get our current and last built revision
 LTS_SERIES="precise trusty"
-PACKAGE_VERSION="${RELEASE_VERSION}+${HEXDATE}+${SHORTHASH}"
+PACKAGE_VERSION="${RELEASE_VERSION}~${HEXDATE}+${SHORTHASH}"
 
 echo "$LONGHASH" > version-git-commit
 echo "$PACKAGE_VERSION" > version-release
@@ -53,6 +53,6 @@ hockeypuck (${PACKAGE_VERSION}~${SERIES}) ${SERIES}; urgency=medium
  -- $DEBFULLNAME <$DEBEMAIL>  $(date -u -R)
 EOF
 
-	dpkg-buildpackage -rfakeroot -d -S -us -uc
+	dpkg-buildpackage -rfakeroot -d -S -k0x879CF8AA8DDA301A
 done
 
