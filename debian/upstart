@@ -7,14 +7,16 @@ stop on runlevel [!2345]
 respawn
 
 setuid hockeypuck
+chdir /var/lib/hockeypuck
 
 pre-start script
-    [ ! -f /etc/default/hockeypuck ] && {stop; exit 1}
+	[ ! -f /etc/default/hockeypuck ] && { stop; exit 0; }
 	initstart="yes"
 	if [ -f /etc/default/hockeypuck ]; then
 		. /etc/default/hockeypuck
 	fi
-	[ "x$initstart" = "xyes" ] || {stop; exit 1}
+	[ "x$initstart" = "xyes" ] || { stop; exit 0; }
 end script
 
 exec /usr/bin/hockeypuck -config /etc/hockeypuck/hockeypuck.conf
+
