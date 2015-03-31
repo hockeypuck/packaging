@@ -1,0 +1,52 @@
+#!/bin/sh -e
+
+# checking hockeypuck account
+
+uid=`getent passwd hockeypuck | cut -d ":" -f 3`
+home=`getent passwd hockeypuck | cut -d ":" -f 6`
+
+# if there is the uid the account is there and we can do
+# the sanit(ar)y checks otherwise we can safely create it.
+
+if [ "$uid" ]; then
+	# guess??? the checks!!!
+	if [ $uid -ge 100 ] && [ $uid -le 999 ]; then
+		echo "hockeypuck uid check: ok"
+	else
+		echo "ERROR: hockeypuck account has a non-system uid!"
+		exit 1
+	fi
+	if [ "$home" = "/var/lib/hockeypuck" ]; then
+		echo "hockeypuck homedir check: ok"
+	else
+		echo "ERROR: hockeypuck account has an invalid home directory!"
+		exit 1
+	fi
+else
+	# what this might mean?? oh creating a system l^Huser!
+	adduser --quiet \
+			--system \
+			--disabled-password \
+			--home /var/lib/hockeypuck \
+		--no-create-home \
+		--shell /bin/bash \
+		--group \
+		hockeypuck
+fi
+
+if [ "$2" = "" ]; then
+	# ch{owning,moding} things around
+	mkdir -p /var/log/hockeypuck
+	chown -R hockeypuck:hockeypuck /var/log/hockeypuck
+	chmod -R 755 /var/log/hockeypuck
+	find /var/log/hockeypuck -type f -exec chmod 644 '{}' ';'
+
+	chgrp -R adm /var/log/hockeypuck
+	chmod	g+s  /var/log/hockeypuck
+fi
+
+chown -R hockeypuck:hockeypuck /var/lib/hockeypuck
+
+#DEBHELPER#
+
+exit 0
