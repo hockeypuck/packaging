@@ -28,7 +28,6 @@ else
 			--system \
 			--disabled-password \
 			--home /var/lib/hockeypuck \
-		--no-create-home \
 		--shell /bin/bash \
 		--group \
 		hockeypuck
@@ -43,9 +42,10 @@ if [ "$2" = "" ]; then
 
 	chgrp -R adm /var/log/hockeypuck
 	chmod	g+s  /var/log/hockeypuck
-fi
 
-chown -R hockeypuck:hockeypuck /var/lib/hockeypuck
+	mkdir -p /var/lib/hockeypuck
+	chown -R hockeypuck:hockeypuck /var/lib/hockeypuck
+fi
 
 #DEBHELPER#
 

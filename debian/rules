@@ -30,7 +30,7 @@ override_dh_auto_install:
 	dh_auto_install
 
 override_dh_auto_clean:
-	rm -rf pkg bin /tmp/go-build*
+	rm -rf pkg bin
 	dh_auto_clean
 
 override_dh_strip:

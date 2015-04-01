@@ -1,1 +1,4 @@
+# By default, hockeypuck will not automatically start on system init. Once
+# you've configured hockeypuck, change the setting below to "initstart=yes" and
+# this will enable the upstart job (sudo service hockeypuck start).
 initstart=no
