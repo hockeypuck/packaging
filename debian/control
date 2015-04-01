@@ -13,6 +13,6 @@ Conflicts: hockeypuck (< 2)
 Recommends:
  logrotate, upstart
 Suggests:
- mongodb-server
+ mongodb-server, postgresql-9.4
 Description: OpenPGP Key Server
  Hockeypuck is an OpenPGP Key Server implementing the HTTP Keyserver Protocol.
