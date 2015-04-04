@@ -38,6 +38,7 @@ fi
 export LTS_SERIES="precise trusty"
 export PACKAGE_VERSION="${RELEASE_VERSION}~${HEXDATE}+${SHORTHASH}"
 
+cd ${GOPATH}
 echo "$LONGHASH" > version-git-commit
 echo "$PACKAGE_VERSION" > version-release
 
