@@ -23,9 +23,9 @@ override_dh_auto_install:
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck \
 		github.com/hockeypuck/server/cmd/hockeypuck
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-load \
-		github.com/hockeypuck/server/cmd/hockeypuck
+		github.com/hockeypuck/server/cmd/hockeypuck-load
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-pbuild \
-		github.com/hockeypuck/server/cmd/hockeypuck
+		github.com/hockeypuck/server/cmd/hockeypuck-pbuild
 	
 	dh_auto_install
 
