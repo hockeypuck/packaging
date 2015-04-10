@@ -3,7 +3,7 @@
 export DEBEMAIL="cmars@cmarstech.com"
 export DEBFULLNAME="Casey Marshall"
 
-export RELEASE_VERSION=2.0~a2
+export RELEASE_VERSION=2.0~b1
 
 export BUILD_PACKAGE=github.com/hockeypuck/server
 
