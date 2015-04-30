@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm -rf src pkg bin
+rm -rf src pkg bin build

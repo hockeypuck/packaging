@@ -10,7 +10,7 @@ export BUILD_PACKAGE=github.com/hockeypuck/server
 ### Set up GOPATH
 
 export GOPATH=$(pwd)
-for pkg in launchpad.net/godeps github.com/laher/goxc; do
+for pkg in launchpad.net/godeps github.com/mitchellh/gox; do
 	go get ${pkg}
 	go install ${pkg}
 done

@@ -2,6 +2,15 @@
 
 . prepare.bash
 
-cd ${GOPATH}/src/${BUILD_PACKAGE}
+for cmdpkg in $(go list ${BUILD_PACKAGE}/cmd/...); do
+	gox -os '!windows !netbsd !plan9' \
+		-output 'build/{{.OS}}_{{.Arch}}/usr/bin/{{.Dir}}' \
+		$cmdpkg
+done
 
-goxc -pv=${PACKAGE_VERSION} -bc="linux,darwin,freebsd,openbsd" -d=${GOPATH}/dist
+for osarch in $(ls build); do
+	tarfile=dist/hockeypuck-${PACKAGE_VERSION}-${osarch}.tar
+	tar -C build/${osarch} -cf ${tarfile} .
+	tar -C instroot -rf ${tarfile} .
+	gzip -9 ${tarfile}
+done
