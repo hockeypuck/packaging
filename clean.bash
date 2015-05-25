@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm -rf src pkg bin build
+rm -rf src pkg bin build dist
