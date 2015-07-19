@@ -10,6 +10,8 @@ export PATH:=$(GOPATH)/bin:$(PATH)
 VERSION_RELEASE=$(shell cat $(CURDIR)/version-release)
 VERSION_GIT_COMMIT=$(shell cat $(CURDIR)/version-git-commit)
 
+GO_BUILD_LDFLAGS=-ldflags "-X github.com/hockeypuck/server.version ${VERSION_RELEASE}"
+
 %:
 	dh $@
 
@@ -21,12 +23,19 @@ override_dh_auto_install:
 	cp -r $(CURDIR)/instroot/* $(CURDIR)/debian/hockeypuck
 	
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck \
+		$(GO_BUILD_LDFLAGS) \
 		github.com/hockeypuck/server/cmd/hockeypuck
+
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-load \
+		$(GO_BUILD_LDFLAGS) \
 		github.com/hockeypuck/server/cmd/hockeypuck-load
+
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-pbuild \
+		$(GO_BUILD_LDFLAGS) \
 		github.com/hockeypuck/server/cmd/hockeypuck-pbuild
+
 	go build -o $(CURDIR)/debian/hockeypuck/usr/bin/hockeypuck-dump \
+		$(GO_BUILD_LDFLAGS) \
 		github.com/hockeypuck/server/cmd/hockeypuck-dump
 	
 	dh_auto_install

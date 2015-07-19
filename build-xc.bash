@@ -5,6 +5,7 @@
 for cmdpkg in $(go list ${BUILD_PACKAGE}/cmd/...); do
 	$GOPATH/bin/gox -os '!windows !netbsd !plan9' \
 		-output 'build/{{.OS}}_{{.Arch}}/usr/bin/{{.Dir}}' \
+		-ldflags "-X github.com/hockeypuck/server.version ${PACKAGE_VERSION}" \
 		$cmdpkg
 done
 
